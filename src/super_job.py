@@ -1,8 +1,6 @@
 from src.job_board import JobBoard
 import os
 import requests
-from pprint import pprint
-import json
 
 
 class SuperJob(JobBoard):
@@ -57,9 +55,17 @@ class SuperJob(JobBoard):
                         "salary_to": vacancy.get("payment_to") if vacancy["payment_to"] else None,
                         "description ": vacancy.get("candidat")
                     }
+                    if vacancy_info["salary_from"] is None:
+                        vacancy_info["salary_from"] = 0
+
+                    if vacancy_info["salary_to"] is None:
+                        vacancy_info["salary_to"] = 0
+
+                    if vacancy_info["salary_to"] == 0:
+                        vacancy_info["salary_to"] = vacancy_info["salary_from"]
                     vacancies_list.append(vacancy_info)
-                with open(f"{params['keyword']}_superjob_ru.json", "w", encoding='UTF-8') as file:
-                    json.dump(vacancies_list, file, indent=2, ensure_ascii=False)
+                # with open(f"{params['keyword']}_superjob_ru.json", "w", encoding='UTF-8') as file:
+                #     json.dump(vacancies_list, file, indent=2, ensure_ascii=False)
                 return vacancies_list
             except (ValueError, KeyError):
                 print("Запрос не удался, вакансии не получены, ошибки ключа или значения")

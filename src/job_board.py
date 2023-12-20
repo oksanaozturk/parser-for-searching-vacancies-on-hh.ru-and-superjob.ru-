@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class JobBoard(ABC):
-    """Класс для получения списка вакансий по API с сайта """
+    """Класс для получения списка словарей (list[dict]) вакансий по API с сайта """
     @abstractmethod
     def get_vacancies(self, keyword: str):
         """

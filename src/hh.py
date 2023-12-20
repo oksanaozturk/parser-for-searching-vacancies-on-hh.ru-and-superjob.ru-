@@ -1,10 +1,8 @@
 from src.job_board import JobBoard
 import requests
-import json
-from pprint import pprint
 
 
-class HH(JobBoard):
+class HeadHunter(JobBoard):
     """Класс для получения списка вакансий по API с сайта HeadHunter.ru"""
 
     url = "https://api.hh.ru/vacancies"
@@ -14,7 +12,7 @@ class HH(JobBoard):
         Инициализирует объект класса к API HeadHunter
 
         """
-        self.url = HH.url
+        self.url = HeadHunter.url
 
     def get_vacancies(self, keyword: str):
         """
@@ -49,11 +47,20 @@ class HH(JobBoard):
                         "url": vacancy.get("apply_alternate_url"),
                         "salary_from": vacancy["salary"].get("from") if vacancy["salary"] else None,
                         "salary_to": vacancy["salary"].get("to") if vacancy["salary"] else None,
-                        "description ": vacancy.get("snippet", {}).get("requirement")
+                        "description": vacancy.get("snippet", {}).get("requirement")
                     }
+                    if vacancy_info["salary_from"] is None:
+                        vacancy_info["salary_from"] = 0
+
+                    if vacancy_info["salary_to"] is None:
+                        vacancy_info["salary_to"] = 0
+
+                    if vacancy_info["salary_to"] == 0:
+                        vacancy_info["salary_to"] = vacancy_info["salary_from"]
+
                     vacancies_list.append(vacancy_info)
-                with open(f"{params['text']}_hh_ru.json", "w", encoding='UTF-8') as file:
-                    json.dump(vacancies_list, file, indent=2, ensure_ascii=False)
+                # with open(f"{params['text']}_hh_ru.json", "w", encoding='UTF-8') as file:
+                #     json.dump(vacancies_list, file, indent=2, ensure_ascii=False)
                 return vacancies_list
             except (ValueError, KeyError):
                 print("Запрос не удался, вакансии не получены, ошибки ключа или значения")
