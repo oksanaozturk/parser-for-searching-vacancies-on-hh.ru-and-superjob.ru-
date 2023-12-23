@@ -77,6 +77,8 @@ class JSONStorageVacancy(JSONStorage):
         """Подсчет количества вакансий в json-файле"""
         with open(self.file_path, "r", encoding='UTF-8') as file:
             vacancies = json.load(file)
-
-        vacancies_count = len(vacancies)
-        return vacancies_count
+        try:
+            vacancies_count = len(vacancies)
+            return vacancies_count
+        except TypeError:
+            print("К сожалению по данному запросу вакансий не найдено.\n")
