@@ -34,6 +34,10 @@ def choose_platform():
             sj = SuperJob()
             sj_vacancies = sj.get_vacancies(keyword)
             json_vacancies_sj = storage.add_vacancies(sj_vacancies)
+            if storage.len_vacancies() == 0:
+                print("К сожалению по данному запросу вакансий не найдено.\n"
+                      "Попробуйте еще раз!\n")
+                continue
             return json_vacancies_sj
         elif platform_selection == '3':
             print("\nДля поиска вакансий Вы выбрали обе платформы.\n")
