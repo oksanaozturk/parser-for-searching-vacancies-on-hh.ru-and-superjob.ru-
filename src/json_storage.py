@@ -81,4 +81,4 @@ class JSONStorageVacancy(JSONStorage):
             vacancies_count = len(vacancies)
             return vacancies_count
         except TypeError:
-            print("К сожалению по данному запросу вакансий не найдено.\n")
+            print("Список вакансий пустой.\n")
