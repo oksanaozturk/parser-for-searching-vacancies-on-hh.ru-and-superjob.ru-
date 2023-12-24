@@ -7,7 +7,7 @@ class SuperJob(JobBoard):
     """Класс для получения списка вакансий по API с сайта  Superjob.ru"""
 
     url = "https://api.superjob.ru/2.0/vacancies/"
-    API_KEY: str = os.getenv('API_FOR_SUPERJOB')
+    API_KEY: str = os.getenv('API_FOR__SUPERJOB')
 
     def __init__(self):
         """
@@ -71,3 +71,4 @@ class SuperJob(JobBoard):
                 print("Запрос не удался, вакансии не получены, ошибки ключа или значения")
         else:
             print("Запрос не выполнен")
+            quit()
